@@ -119,13 +119,17 @@ public:
   string seedname(int seedindex) {
 
     if (seedindex==0) return "L1L2";
-    if (seedindex==1) return "L3L4";
-    if (seedindex==2) return "L5L6";
-    if (seedindex==3) return "D1D2";
-    if (seedindex==4) return "D3D4";
-    if (seedindex==5) return "L1D1";
-    if (seedindex==6) return "L2D1";
-
+    if (seedindex==1) return "L2L3";
+    if (seedindex==2) return "L3L4";
+    if (seedindex==3) return "L5L6";
+    if (seedindex==4) return "D1D2";
+    if (seedindex==5) return "D3D4";
+    if (seedindex==6) return "L1D1";
+    if (seedindex==7) return "L2D1";
+    if (seedindex==8) return "L3L4L2";
+    if (seedindex==9) return "L5L6L4";
+    if (seedindex==10) return "L2L3D1";
+    if (seedindex==11) return "D1D2L2";    
     return "Unkown seedindex";
     
   }
@@ -159,7 +163,7 @@ private:
 };
 
 
-void diskresiduals(){
+void diskresiduals_displaced(){
 //
 // To see the output of this macro, click here.
 
@@ -200,70 +204,93 @@ gStyle->SetOptTitle(1);
 
  PlotResiduals Resid_D1PS_L1L2(1,1,0);
  PlotResiduals Resid_D12S_L1L2(1,0,0);
- PlotResiduals Resid_D12S_L3L4(1,0,1);
- PlotResiduals Resid_D1PS_D3D4(1,1,4);
+
+ PlotResiduals Resid_D1PS_L2L3(1,1,1); 
+ PlotResiduals Resid_D12S_L2L3(1,0,1);
+
+ PlotResiduals Resid_D12S_L3L4(1,0,2);
+ PlotResiduals Resid_D1PS_D3D4(1,1,5);
 		
  PlotResiduals Resid_D2PS_L1L2(2,1,0);
  PlotResiduals Resid_D22S_L1L2(2,0,0);
- PlotResiduals Resid_D22S_L3L4(2,0,1);
- PlotResiduals Resid_D2PS_D3D4(2,1,4);
- PlotResiduals Resid_D2PS_L1D1(2,1,5);
- PlotResiduals Resid_D2PS_L2D1(2,1,6);
- PlotResiduals Resid_D22S_L2D1(2,0,6);
+ PlotResiduals Resid_D22S_L3L4(2,0,2);
+ PlotResiduals Resid_D2PS_D3D4(2,1,5);
+ PlotResiduals Resid_D2PS_L1D1(2,1,6);
+ PlotResiduals Resid_D2PS_L2D1(2,1,7);
+ PlotResiduals Resid_D22S_L2D1(2,0,7);
 		
  PlotResiduals Resid_D3PS_L1L2(3,1,0);
  PlotResiduals Resid_D32S_L1L2(3,0,0);
- PlotResiduals Resid_D3PS_D1D2(3,1,3);
- PlotResiduals Resid_D32S_D1D2(3,0,3);
- PlotResiduals Resid_D3PS_L1D1(3,1,5);
- PlotResiduals Resid_D3PS_L2D1(3,1,6);
- PlotResiduals Resid_D32S_L2D1(3,0,6);
+ PlotResiduals Resid_D3PS_D1D2(3,1,4);
+ PlotResiduals Resid_D32S_D1D2(3,0,4);
+ PlotResiduals Resid_D3PS_L1D1(3,1,6);
+ PlotResiduals Resid_D3PS_L2D1(3,1,7);
+ PlotResiduals Resid_D32S_L2D1(3,0,7);
 		
  PlotResiduals Resid_D42S_L1L2(4,0,0);
- PlotResiduals Resid_D4PS_D1D2(4,1,3);
- PlotResiduals Resid_D42S_D1D2(4,0,3);
- PlotResiduals Resid_D4PS_L1D1(4,1,5);
- PlotResiduals Resid_D42S_L1D1(4,0,5);
- PlotResiduals Resid_D42S_L2D1(4,0,6);
-		
- PlotResiduals Resid_D5PS_D1D2(5,1,3);
- PlotResiduals Resid_D52S_D1D2(5,0,3);
- PlotResiduals Resid_D5PS_D3D4(5,1,4);
- PlotResiduals Resid_D52S_D3D4(5,0,4);
- PlotResiduals Resid_D5PS_L1D1(5,1,5);
- PlotResiduals Resid_D52S_L1D1(5,0,5);
- 
+ PlotResiduals Resid_D4PS_D1D2(4,1,4);
+ PlotResiduals Resid_D42S_D1D2(4,0,4);
+ PlotResiduals Resid_D4PS_L1D1(4,1,6);
+ PlotResiduals Resid_D42S_L1D1(4,0,6);
+ PlotResiduals Resid_D42S_L2D1(4,0,7);
 
- ifstream in("diskresiduals.txt");
+ // PlotResiduals(int disk, int isPS,  int seedindex)		
+ PlotResiduals Resid_D5PS_D1D2(5,1,4);
+ PlotResiduals Resid_D52S_D1D2(5,0,4);
+ PlotResiduals Resid_D5PS_D3D4(5,1,5);
+ PlotResiduals Resid_D52S_D3D4(5,0,5);
+ PlotResiduals Resid_D5PS_L1D1(5,1,6);
+ PlotResiduals Resid_D52S_L1D1(5,0,6);
+
+ PlotResiduals Resid_D5PS_L2D1(5,1,7);
+ PlotResiduals Resid_D52S_L2D1(5,0,7);
+
+ PlotResiduals Resid_D5PS_L3L4L2(5,1,8);
+ PlotResiduals Resid_D52S_L3L4L2(5,0,8);
+
+ PlotResiduals Resid_D5PS_L5L6L4(5,1,9);
+ PlotResiduals Resid_D52S_L5L6L4(5,0,9);
+
+ PlotResiduals Resid_D5PS_L2L3D1(5,1,10);
+ PlotResiduals Resid_D52S_L2L3D1(5,0,10);
+
+ PlotResiduals Resid_D5PS_D1D2L2(5,1,11);
+ PlotResiduals Resid_D52S_D1D2L2(5,0,11);
+   
+
+
+
+ ifstream in("diskresiduals_disp_all.txt");
 
  int count=0;
 
  while (in.good()) {
 
-   double disk,isPS,seedlayer,seeddisk,pt,idphi,dphi,dphicut,idr,dr,drcut;
-   
-   in>>disk>>isPS>>seedlayer>>seeddisk>>pt>>idphi>>dphi>>dphicut>>idr>>dr>>drcut;
+   double disk,isPS,pt,idphi,dphi,dphicut,idr,dr,drcut;
+   int seedindex=-1;
+   in>>disk>>isPS>>seedindex>>pt>>idphi>>dphi>>dphicut>>idr>>dr>>drcut;
 
    if (!in.good()) continue;
    
-   int seedindex=-1;
-
-   if (seedlayer==1&&seeddisk==0) seedindex=0;  //L1L2
-   if (seedlayer==3&&seeddisk==0) seedindex=1;  //L3L4
-   if (seedlayer==5&&seeddisk==0) seedindex=2;  //L5L6
-   if (seedlayer==0&&seeddisk==1) seedindex=3;  //D1D2
-   if (seedlayer==0&&seeddisk==3) seedindex=4;  //D3D4
-   if (seedlayer==1&&seeddisk==1) seedindex=5;  //L1D1
-   if (seedlayer==2&&seeddisk==1) seedindex=6;  //L2D1
 
 
+   // if (seedindex==8) return "L3L4L2";
+   // if (seedindex==9) return "L5L6L4";
+   // if (seedindex==10) return "L2L3D1";
+   // if (seedindex==11) return "D1D2L2"; 
    int added=0;
    
    added+=Resid_D1PS_L1L2.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut);
    added+=Resid_D12S_L1L2.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut);
+
+   added+=Resid_D1PS_L2L3.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut);
+   added+=Resid_D12S_L2L3.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut);
+
    added+=Resid_D12S_L3L4.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut);
    added+=Resid_D1PS_D3D4.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut);
 		
+
+
    added+=Resid_D2PS_L1L2.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut);
    added+=Resid_D22S_L1L2.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut);
    added+=Resid_D22S_L3L4.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut);
@@ -305,69 +332,69 @@ gStyle->SetOptTitle(1);
 //cout << "Processed: "<<count<<" events"<<endl;
 
  Resid_D1PS_L1L2.Draw(c1);
- c1->Print("diskresiduals.pdf(","pdf");
+ c1->Print("diskresiduals_disp.pdf(","pdf");
  Resid_D12S_L1L2.Draw(c1);
- c1->Print("diskresiduals.pdf(","pdf");
+ c1->Print("diskresiduals_disp.pdf(","pdf");
  Resid_D12S_L3L4.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
+ c1->Print("diskresiduals_disp.pdf","pdf");
  Resid_D1PS_D3D4.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
+ c1->Print("diskresiduals_disp.pdf","pdf");
  
  Resid_D2PS_L1L2.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
+ c1->Print("diskresiduals_disp.pdf","pdf");
  Resid_D22S_L1L2.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
+ c1->Print("diskresiduals_disp.pdf","pdf");
  Resid_D22S_L3L4.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
+ c1->Print("diskresiduals_disp.pdf","pdf");
  Resid_D2PS_D3D4.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
+ c1->Print("diskresiduals_disp.pdf","pdf");
  Resid_D2PS_L1D1.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
+ c1->Print("diskresiduals_disp.pdf","pdf");
  Resid_D2PS_L2D1.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
+ c1->Print("diskresiduals_disp.pdf","pdf");
  Resid_D22S_L2D1.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
+ c1->Print("diskresiduals_disp.pdf","pdf");
  
  Resid_D3PS_L1L2.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
+ c1->Print("diskresiduals_disp.pdf","pdf");
  Resid_D32S_L1L2.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
+ c1->Print("diskresiduals_disp.pdf","pdf");
  Resid_D3PS_D1D2.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
+ c1->Print("diskresiduals_disp.pdf","pdf");
  Resid_D32S_D1D2.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
+ c1->Print("diskresiduals_disp.pdf","pdf");
  Resid_D3PS_L1D1.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
+ c1->Print("diskresiduals_disp.pdf","pdf");
  Resid_D3PS_L2D1.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
+ c1->Print("diskresiduals_disp.pdf","pdf");
  Resid_D32S_L2D1.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
+ c1->Print("diskresiduals_disp.pdf","pdf");
  
  Resid_D42S_L1L2.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
+ c1->Print("diskresiduals_disp.pdf","pdf");
  Resid_D4PS_D1D2.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
+ c1->Print("diskresiduals_disp.pdf","pdf");
  Resid_D42S_D1D2.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
+ c1->Print("diskresiduals_disp.pdf","pdf");
  Resid_D4PS_L1D1.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
+ c1->Print("diskresiduals_disp.pdf","pdf");
  Resid_D42S_L1D1.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
+ c1->Print("diskresiduals_disp.pdf","pdf");
  Resid_D42S_L2D1.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf"); 
+ c1->Print("diskresiduals_disp.pdf","pdf"); 
  
  Resid_D5PS_D1D2.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
+ c1->Print("diskresiduals_disp.pdf","pdf");
  Resid_D52S_D1D2.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
+ c1->Print("diskresiduals_disp.pdf","pdf");
  Resid_D5PS_D3D4.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
+ c1->Print("diskresiduals_disp.pdf","pdf");
  Resid_D52S_D3D4.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
+ c1->Print("diskresiduals_disp.pdf","pdf");
  Resid_D5PS_L1D1.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
+ c1->Print("diskresiduals_disp.pdf","pdf");
  Resid_D52S_L1D1.Draw(c1);
- c1->Print("diskresiduals.pdf)","pdf");
+ c1->Print("diskresiduals_disp.pdf)","pdf");
 
 }
 
