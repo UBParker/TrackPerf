@@ -16,33 +16,36 @@ public:
   PlotResiduals(int layer, int seedindex){
     layer_=layer;
     seedindex_=seedindex;
-    double drphimax=0.1;//0.2
-    double dzmax=5.0;//15
+
+    double drphimax= 2.0; //0.2;
+    double dzmax=15.0; // 10.0 ;
     if ((layer_>4)&&(seedindex_==1)) drphimax=1.0;
     if (seedindex_==1) dzmax=5.0; //10
+    //if ((layer_>4)&&(seedindex_==1)) drphimax=0.1;
+
     string name="r*phi residual in layer "+std::to_string(layer)+", "+seedname(seedindex)
       +" seed, pt<3 GeV";
-    hist16l_ = new TH1F(name.c_str(),name.c_str(),50,-drphimax,drphimax);
+    hist16l_ = new TH1F(name.c_str(),name.c_str(),25,-drphimax,drphimax);
     name="r*iphi residual in layer "+std::to_string(layer)+", "+seedname(seedindex)
       +" seed, pt<3 GeV";
-    hist116l_ = new TH1F(name.c_str(),name.c_str(),50,-drphimax,drphimax);
+    hist116l_ = new TH1F(name.c_str(),name.c_str(),25,-drphimax,drphimax);
     name="r*phi residual in layer "+std::to_string(layer)+", "+seedname(seedindex)
       +" seed, 3<pt<8 GeV";
-    hist16m_ = new TH1F(name.c_str(),name.c_str(),50,-drphimax,drphimax);
+    hist16m_ = new TH1F(name.c_str(),name.c_str(),25,-drphimax,drphimax);
     name="r*iphi residual in layer "+std::to_string(layer)+", "+seedname(seedindex)
       +" seed, 3<pt<8 GeV";
-    hist116m_ = new TH1F(name.c_str(),name.c_str(),50,-drphimax,drphimax);
+    hist116m_ = new TH1F(name.c_str(),name.c_str(),25,-drphimax,drphimax);
     name="r*phi residual in layer "+std::to_string(layer)+", "+seedname(seedindex)
       +" seed, pt>8 GeV";
-    hist16h_ = new TH1F(name.c_str(),name.c_str(),50,-drphimax,drphimax);
+    hist16h_ = new TH1F(name.c_str(),name.c_str(),25,-drphimax,drphimax);
     name="r*iphi residual in layer "+std::to_string(layer)+", "+seedname(seedindex)
       +" seed, pt>8 GeV";
-    hist116h_ = new TH1F(name.c_str(),name.c_str(),50,-drphimax,drphimax);
+    hist116h_ = new TH1F(name.c_str(),name.c_str(),25,-drphimax,drphimax);
     
     name="z residual in layer "+std::to_string(layer)+", "+seedname(seedindex);
-    hist16_ = new TH1F(name.c_str(),name.c_str(),40,-dzmax,dzmax);
+    hist16_ = new TH1F(name.c_str(),name.c_str(),10,-dzmax,dzmax);
     name="iz residual in layer "+std::to_string(layer)+", "+seedname(seedindex);
-    hist116_ = new TH1F(name.c_str(),name.c_str(),40,-dzmax,dzmax);
+    hist116_ = new TH1F(name.c_str(),name.c_str(),10,-dzmax,dzmax);
 }
 
   string seedname(int seedindex) {
@@ -58,7 +61,8 @@ public:
     if (seedindex==8) return "L3L4L2";
     if (seedindex==9) return "L5L6L4";
     if (seedindex==10) return "L2L3D1";
-    if (seedindex==11) return "D1D2L2";   
+    if (seedindex==11) return "D1D2L2"; 
+
 
     return "Unkown seedindex";
     
@@ -228,72 +232,55 @@ gStyle->SetOptTitle(1);
  c1->SetFillColor(0);
  c1->SetGrid();
 
-
-//    if (seedindex==0) return "L1L2";
-//    if (seedindex==1) return "L2L3";
-//    if (seedindex==2) return "L3L4";
- //   if (seedindex==3) return "L5L6";
- //   if (seedindex==4) return "D1D2";
- ///   if (seedindex==5) return "D3D4";
- //   if (seedindex==6) return "L1D1";
- //   if (seedindex==7) return "L2D1";
- //   if (seedindex==8) return "L3L4L2";
-  //  if (seedindex==9) return "L5L6L4";
-   // if (seedindex==10) return "L2L3D1";
-    //if (seedindex==11) return "D1D2L2"; 
-
-
-//  PlotResiduals (layer, seed index)      
-
- PlotResiduals Resid_L3_L5L6L4(3,9);
- PlotResiduals Resid_L3_D1D2L2(3,11);
-
- PlotResiduals Resid_L2_L5L6L4(2,9);
-
- PlotResiduals Resid_L1_L3L4L2(1,8);
- PlotResiduals Resid_L1_L5L6L4(1,9);
- PlotResiduals Resid_L1_L2L3D1(1,10); 
- PlotResiduals Resid_L1_D1D2L2(1,11);
-
- PlotResiduals Resid_L4_L2L3D1(4,10); 
- PlotResiduals Resid_L4_D1D2L2(4,11);
-
- PlotResiduals Resid_L6_L3L4L2(6,8);
-
-
  PlotResiduals Resid_L3_L1L2(3,0);
  PlotResiduals Resid_L4_L1L2(4,0);
  PlotResiduals Resid_L5_L1L2(5,0);
  PlotResiduals Resid_L6_L1L2(6,0);
 
- PlotResiduals Resid_L1_L3L4(1,1);
- PlotResiduals Resid_L2_L3L4(2,1);
- PlotResiduals Resid_L5_L3L4(5,1);
- PlotResiduals Resid_L6_L3L4(6,1);
+ PlotResiduals Resid_L4_L2L3(4,1);
+ PlotResiduals Resid_L5_L2L3(5,1);
+ PlotResiduals Resid_L6_L2L3(6,1);
 
+ PlotResiduals Resid_L1_L3L4(1,2);
+ PlotResiduals Resid_L2_L3L4(2,2);
+ PlotResiduals Resid_L5_L3L4(5,2);
+ PlotResiduals Resid_L6_L3L4(6,2);
 
+ PlotResiduals Resid_L1_L5L6(1,3);
+ PlotResiduals Resid_L2_L5L6(2,3);
+ PlotResiduals Resid_L3_L5L6(3,3);
+ PlotResiduals Resid_L4_L5L6(4,3);
 
- PlotResiduals Resid_L1_L5L6(1,2);
- PlotResiduals Resid_L2_L5L6(2,2);
- PlotResiduals Resid_L3_L5L6(3,2);
- PlotResiduals Resid_L4_L5L6(4,2);
-
- PlotResiduals Resid_L1_D1D2(1,3);
- PlotResiduals Resid_L1_D3D4(1,4);
+ PlotResiduals Resid_L1_L2L3(1,1);
+ PlotResiduals Resid_L1_D1D2(1,4);
+ PlotResiduals Resid_L1_D3D4(1,5);
  PlotResiduals Resid_L1_L2D1(1,7);
  
- PlotResiduals Resid_L2_D1D2(2,3);
+ PlotResiduals Resid_L1_L3L4L2(1,8);
+ PlotResiduals Resid_L1_L5L6L4(1,9);
+ PlotResiduals Resid_L1_L2L3D1(1,10); 
+ PlotResiduals Resid_L1_D1D2L2(1,11);
 
+ PlotResiduals Resid_L2_D1D2(2,4);
+ 
+ PlotResiduals Resid_L2_L5L6L4(2,9);
 
- ifstream in("layerresiduals_prompt_all.txt"); //#prompt / disp
+ PlotResiduals Resid_L3_L5L6L4(3,9);
+ //PlotResiduals Resid_L3_D1D2L2(3,11);
+ PlotResiduals Resid_L4_L2L3D1(4,10); 
+ //PlotResiduals Resid_L4_D1D2L2(4,11);
+
+ PlotResiduals Resid_L6_L3L4L2(6,8);
+
+ ifstream in("layerresiduals.txt");
 
  int count=0;
 
  while (in.good()) {
 
-   double layer,seedindex,pt,idphi,dphi,dphicut,idz,dz,dzcut;
+   double layer,seedindex,pt,idphi,dphi,dphicut,idz,dz,dzcut, rinv;
    
-   in>>layer>>seedindex>>pt>>idphi>>dphi>>dphicut>>idz>>dz>>dzcut;
+   in>>layer>>seedindex>>pt>>idphi>>dphi>>dphicut>>idz>>dz>>dzcut>>rinv;
 
    if (!in.good()) continue;
 
@@ -301,6 +288,10 @@ gStyle->SetOptTitle(1);
    Resid_L4_L1L2.addResid(layer, seedindex, pt, idphi, dphi, dphicut, idz, dz, dzcut);
    Resid_L5_L1L2.addResid(layer, seedindex, pt, idphi, dphi, dphicut, idz, dz, dzcut);
    Resid_L6_L1L2.addResid(layer, seedindex, pt, idphi, dphi, dphicut, idz, dz, dzcut);
+
+   Resid_L4_L2L3.addResid(layer, seedindex, pt, idphi, dphi, dphicut, idz, dz, dzcut);
+   Resid_L5_L2L3.addResid(layer, seedindex, pt, idphi, dphi, dphicut, idz, dz, dzcut);
+   Resid_L6_L2L3.addResid(layer, seedindex, pt, idphi, dphi, dphicut, idz, dz, dzcut);
 
    Resid_L1_L3L4.addResid(layer, seedindex, pt, idphi, dphi, dphicut, idz, dz, dzcut);
    Resid_L2_L3L4.addResid(layer, seedindex, pt, idphi, dphi, dphicut, idz, dz, dzcut);
@@ -312,39 +303,46 @@ gStyle->SetOptTitle(1);
    Resid_L3_L5L6.addResid(layer, seedindex, pt, idphi, dphi, dphicut, idz, dz, dzcut);
    Resid_L4_L5L6.addResid(layer, seedindex, pt, idphi, dphi, dphicut, idz, dz, dzcut);
    
+   Resid_L1_L2L3.addResid(layer, seedindex, pt, idphi, dphi, dphicut, idz, dz, dzcut);
    Resid_L1_D1D2.addResid(layer, seedindex, pt, idphi, dphi, dphicut, idz, dz, dzcut);
    Resid_L1_D3D4.addResid(layer, seedindex, pt, idphi, dphi, dphicut, idz, dz, dzcut);
    Resid_L1_L2D1.addResid(layer, seedindex, pt, idphi, dphi, dphicut, idz, dz, dzcut);
  
-   Resid_L2_D1D2.addResid(layer, seedindex, pt, idphi, dphi, dphicut, idz, dz, dzcut);
-
-   Resid_L3_L5L6L4.addResid(layer, seedindex, pt, idphi, dphi, dphicut, idz, dz, dzcut);
-   Resid_L3_D1D2L2.addResid(layer, seedindex, pt, idphi, dphi, dphicut, idz, dz, dzcut);
-   Resid_L2_L5L6L4.addResid(layer, seedindex, pt, idphi, dphi, dphicut, idz, dz, dzcut);
-   Resid_L1_L3L4L2.addResid(layer, seedindex, pt, idphi, dphi, dphicut, idz, dz, dzcut);
+   Resid_L1_L3L4L2.addResid(layer, seedindex, pt, idphi, dphi, dphicut, idz, dz, dzcut); // added = done
    Resid_L1_L5L6L4.addResid(layer, seedindex, pt, idphi, dphi, dphicut, idz, dz, dzcut);
    Resid_L1_L2L3D1.addResid(layer, seedindex, pt, idphi, dphi, dphicut, idz, dz, dzcut); 
    Resid_L1_D1D2L2.addResid(layer, seedindex, pt, idphi, dphi, dphicut, idz, dz, dzcut);
 
-   Resid_L4_L2L3D1.addResid(layer, seedindex, pt, idphi, dphi, dphicut, idz, dz, dzcut); 
-   Resid_L4_D1D2L2.addResid(layer, seedindex, pt, idphi, dphi, dphicut, idz, dz, dzcut);
+   Resid_L2_D1D2.addResid(layer, seedindex, pt, idphi, dphi, dphicut, idz, dz, dzcut);
+ 
+   Resid_L2_L5L6L4.addResid(layer, seedindex, pt, idphi, dphi, dphicut, idz, dz, dzcut);
+ 
+   Resid_L3_L5L6L4.addResid(layer, seedindex, pt, idphi, dphi, dphicut, idz, dz, dzcut);
+   //Resid_L3_D1D2L2.addResid(layer, seedindex, pt, idphi, dphi, dphicut, idz, dz, dzcut);
+   Resid_L4_L2L3D1.addResid(layer, seedindex, pt, idphi, dphi, dphicut, idz, dz, dzcut);
    Resid_L6_L3L4L2.addResid(layer, seedindex, pt, idphi, dphi, dphicut, idz, dz, dzcut);
-
-
-
 
    count++;
 
  }
 
 //cout << "Processed: "<<count<<" events"<<endl;
-
+ Resid_L1_L2L3.Draw(c1);
+ c1->Print("layerresiduals.pdf(","pdf");
+ Resid_L1_L2L3D1.Draw(c1);
+ c1->Print("layerresiduals.pdf(","pdf"); 
  Resid_L1_L3L4.Draw(c1);
- c1->Print("layerresiduals_ALLprompt.pdf(","pdf");
+ c1->Print("layerresiduals.pdf(","pdf");
+ Resid_L1_L3L4L2.Draw(c1);
+ c1->Print("layerresiduals.pdf(","pdf");
  Resid_L1_L5L6.Draw(c1);
- c1->Print("layerresiduals_ALLprompt.pdf","pdf");
+ c1->Print("layerresiduals.pdf","pdf");
+ Resid_L1_L5L6L4.Draw(c1);
+ c1->Print("layerresiduals.pdf","pdf");
  Resid_L1_D1D2.Draw(c1);
- c1->Print("layerresiduals_ALLprompt.pdf","pdf");
+ c1->Print("layerresiduals.pdf","pdf");
+ Resid_L1_D1D2L2.Draw(c1);
+ c1->Print("layerresiduals.pdf","pdf"); 
  Resid_L1_D3D4.Draw(c1);
  c1->Print("layerresiduals_ALLprompt.pdf","pdf");
  Resid_L1_L2D1.Draw(c1);
@@ -352,55 +350,39 @@ gStyle->SetOptTitle(1);
  Resid_L2_L3L4.Draw(c1);
  c1->Print("layerresiduals_ALLprompt.pdf","pdf");
  Resid_L2_L5L6.Draw(c1);
- c1->Print("layerresiduals_ALLprompt.pdf","pdf");
+ c1->Print("layerresiduals.pdf","pdf");
+ Resid_L2_L5L6L4.Draw(c1);
+ c1->Print("layerresiduals.pdf","pdf");
  Resid_L2_D1D2.Draw(c1);
  c1->Print("layerresiduals_ALLprompt.pdf","pdf");
  Resid_L3_L1L2.Draw(c1);
  c1->Print("layerresiduals_ALLprompt.pdf","pdf");
  Resid_L3_L5L6.Draw(c1);
- c1->Print("layerresiduals_ALLprompt.pdf","pdf");
+ c1->Print("layerresiduals.pdf","pdf");
+ Resid_L3_L5L6L4.Draw(c1);
+ c1->Print("layerresiduals.pdf","pdf");
  Resid_L4_L1L2.Draw(c1);
  c1->Print("layerresiduals_ALLprompt.pdf","pdf");
  Resid_L4_L5L6.Draw(c1);
- c1->Print("layerresiduals_ALLprompt.pdf","pdf");
+ c1->Print("layerresiduals.pdf","pdf");
+ Resid_L4_L2L3.Draw(c1);
+ c1->Print("layerresiduals.pdf","pdf");
+ Resid_L4_L2L3D1.Draw(c1);
+ c1->Print("layerresiduals.pdf","pdf");
  Resid_L5_L1L2.Draw(c1);
  c1->Print("layerresiduals_ALLprompt.pdf","pdf");
  Resid_L5_L3L4.Draw(c1);
- c1->Print("layerresiduals_ALLprompt.pdf","pdf");
+ c1->Print("layerresiduals.pdf","pdf");
+ Resid_L5_L2L3.Draw(c1);
+ c1->Print("layerresiduals.pdf","pdf");
  Resid_L6_L1L2.Draw(c1);
  c1->Print("layerresiduals_ALLprompt.pdf","pdf");
  Resid_L6_L3L4.Draw(c1);
- c1->Print("layerresiduals_ALLprompt.pdf)","pdf");
-
- Resid_L3_L5L6L4.Draw(c1);
- c1->Print("layerresiduals_ALLprompt.pdf)","pdf");
-
- Resid_L3_D1D2L2.Draw(c1);
- c1->Print("layerresiduals_ALLprompt.pdf)","pdf");
-
- Resid_L2_L5L6L4.Draw(c1);
- c1->Print("layerresiduals_ALLprompt.pdf)","pdf");
-
-
- Resid_L1_L3L4L2.Draw(c1);
- c1->Print("layerresiduals_ALLprompt.pdf)","pdf");
- Resid_L1_L5L6L4.Draw(c1);
- c1->Print("layerresiduals_ALLprompt.pdf)","pdf");
-
- Resid_L1_L2L3D1.Draw(c1); 
- c1->Print("layerresiduals_ALLprompt.pdf)","pdf");
-
- Resid_L1_D1D2L2.Draw(c1);
- c1->Print("layerresiduals_ALLprompt.pdf)","pdf");
-
- Resid_L4_L2L3D1.Draw(c1);
- c1->Print("layerresiduals_ALLprompt.pdf)","pdf");
-
- Resid_L4_D1D2L2.Draw(c1);
- c1->Print("layerresiduals_ALLprompt.pdf)","pdf");
-
- Resid_L6_L3L4L2.Draw(c1);
- c1->Print("layerresiduals_ALLprompt.pdf)","pdf");
+ c1->Print("layerresiduals.pdf)","pdf");
+ //Resid_L6_L3L4L2.Draw(c1);
+ //c1->Print("layerresiduals.pdf)","pdf");
+ //Resid_L6_L2L3.Draw(c1);
+ //c1->Print("layerresiduals.pdf","pdf");
 
 
 
