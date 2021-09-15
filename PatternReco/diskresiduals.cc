@@ -4,7 +4,6 @@
 #include "TStyle.h"
 #include "TLorentzVector.h"
 #include "TCanvas.h"
-#include "TLegend.h"
 #include "TH1.h"
 #include "TGaxis.h"
 #include <fstream>
@@ -18,29 +17,26 @@ public:
     disk_=disk;
     isPS_=isPS;
     seedindex_=seedindex;
-    double drphimax=2. ;//0.50;// was 0.1
-    double drmax=10.0; // was 10
-    if (isPS==1) drmax=5.0; //was 5
-    int nBinsdrphi = 25;
-    int nBinsdr = 10;
-
+    double drphimax=1.0;
+    double drmax=10.0;
+    if (isPS==1) drmax=5.0;
     string name="r*phi residual in D"+std::to_string(disk)+ps2s(isPS)+", "+seedname(seedindex)+" seed, pt<3 GeV";
-    hist16l_ = new TH1F(name.c_str(),name.c_str(),nBinsdrphi ,-drphimax,drphimax);
+    hist16l_ = new TH1F(name.c_str(),name.c_str(),50,-drphimax,drphimax);
     name="r*iphi residual in D"+std::to_string(disk)+ps2s(isPS)+", "+seedname(seedindex)+" seed, pt<3 GeV";
-    hist116l_ = new TH1F(name.c_str(),name.c_str(), nBinsdrphi ,-drphimax,drphimax);
+    hist116l_ = new TH1F(name.c_str(),name.c_str(),50,-drphimax,drphimax);
     name="r*phi residual in D"+std::to_string(disk)+ps2s(isPS)+", "+seedname(seedindex)+" seed, 3<pt<8 GeV";
-    hist16m_ = new TH1F(name.c_str(),name.c_str(), nBinsdrphi ,-drphimax,drphimax);
+    hist16m_ = new TH1F(name.c_str(),name.c_str(),50,-drphimax,drphimax);
     name="r*iphi residual in D"+std::to_string(disk)+ps2s(isPS)+", "+seedname(seedindex)+" seed, 3<pt<8 GeV";
-    hist116m_ = new TH1F(name.c_str(),name.c_str(), nBinsdrphi ,-drphimax,drphimax);
+    hist116m_ = new TH1F(name.c_str(),name.c_str(),50,-drphimax,drphimax);
     name="r*phi residual in D"+std::to_string(disk)+ps2s(isPS)+", "+seedname(seedindex)+" seed, pt>8 GeV";
-    hist16h_ = new TH1F(name.c_str(),name.c_str(), nBinsdrphi ,-drphimax,drphimax);
+    hist16h_ = new TH1F(name.c_str(),name.c_str(),50,-drphimax,drphimax);
     name="r*iphi residual in D"+std::to_string(disk)+ps2s(isPS)+", "+seedname(seedindex)+" seed, pt>8 GeV";
-    hist116h_ = new TH1F(name.c_str(),name.c_str(), nBinsdrphi ,-drphimax,drphimax);
+    hist116h_ = new TH1F(name.c_str(),name.c_str(),50,-drphimax,drphimax);
     
     name="r residual in D"+std::to_string(disk)+ps2s(isPS)+", "+seedname(seedindex);
-    hist16_ = new TH1F(name.c_str(),name.c_str(), nBinsdr ,-drmax,drmax);
+    hist16_ = new TH1F(name.c_str(),name.c_str(),20,-drmax,drmax);
     name="ir residual in D"+std::to_string(disk)+ps2s(isPS)+", "+seedname(seedindex);
-    hist116_ = new TH1F(name.c_str(),name.c_str(), nBinsdr ,-drmax,drmax);
+    hist116_ = new TH1F(name.c_str(),name.c_str(),20,-drmax,drmax);
 }
 
   int addResid(int disk, int isPS, int seedindex, double pt, double idphi, double dphi, double dphicut, double idr, double dr, double drcut){
@@ -78,43 +74,21 @@ public:
 
     cout << "disk seedindex phicut : "<<disk_<<" "<<seedindex_<<" "<<dphicut_<<endl;
     
-
-    TLegend* leg3 = new TLegend(0.37,0.64,0.59,0.85);
-    leg3->SetTextSize(0.08);
-    leg3->SetFillColor(0);
-    leg3->SetBorderSize(0);
-
-
     c->cd(1);
     hist16l_->SetLineColor(kBlue);
-
-    hist116l_->GetXaxis()->SetNdivisions(12);
+    hist16l_->Draw();
     hist116l_->SetLineColor(kRed);
-    hist116l_->Draw();
-    hist116l_->SetMaximum(2.61 *hist16l_->GetMaximum() );
-    hist16l_->Draw("Same");
-
-
+    hist116l_->Draw("Same");
     TLine* ll1 = new TLine(-dphicut_,0,-dphicut_,0.5*hist116l_->GetMaximum());
     ll1->Draw();
     TLine* ll2 = new TLine(dphicut_,0,dphicut_,0.5*hist116l_->GetMaximum());
     ll2->Draw();
 
-    leg3->AddEntry( hist16l_, "float", "L" );
-    leg3->AddEntry( hist116l_, "int", "L");
-    leg3->Draw();
-    c->Update();
-
-
     c->cd(2);
     hist16m_->SetLineColor(kBlue);
-
-    hist116m_->GetXaxis()->SetNdivisions(12);
+    hist16m_->Draw();
     hist116m_->SetLineColor(kRed);
-    hist116m_->Draw();
-    hist116m_->SetMaximum(1.61 *hist116m_->GetMaximum() );
-    hist16m_->Draw("Same");
-
+    hist116m_->Draw("Same");
     TLine* lm1 = new TLine(-dphicut_,0,-dphicut_,0.5*hist116m_->GetMaximum());
     lm1->Draw();
     TLine* lm2 = new TLine(dphicut_,0,dphicut_,0.5*hist116m_->GetMaximum());
@@ -122,14 +96,9 @@ public:
 
     c->cd(3);
     hist16h_->SetLineColor(kBlue);
-
-
-    hist116h_->GetXaxis()->SetNdivisions(12);
+    hist16h_->Draw();
     hist116h_->SetLineColor(kRed);
-    hist116h_->Draw();
-    hist116h_->SetMaximum(1.61 *hist116h_->GetMaximum() );
-    hist16h_->Draw("Same");
-
+    hist116h_->Draw("Same");
     TLine* lh1 = new TLine(-dphicut_,0,-dphicut_,0.5*hist116h_->GetMaximum());
     lh1->Draw();
     TLine* lh2 = new TLine(dphicut_,0,dphicut_,0.5*hist116h_->GetMaximum());
@@ -137,11 +106,9 @@ public:
 
     c->cd(4);
     hist16_->SetLineColor(kBlue);
-    hist116_->GetXaxis()->SetNdivisions(12);
+    hist16_->Draw();
     hist116_->SetLineColor(kRed);
-    hist116_->Draw();
-    hist116_->SetMaximum(1.61 *hist116_->GetMaximum() );
-    hist16_->Draw("Same");
+    hist116_->Draw("Same");
     TLine* l1 = new TLine(-drcut_,0,-drcut_,0.5*hist116_->GetMaximum());
     l1->Draw();
     TLine* l2 = new TLine(drcut_,0,drcut_,0.5*hist116_->GetMaximum());
@@ -162,7 +129,9 @@ public:
     if (seedindex==8) return "L3L4L2";
     if (seedindex==9) return "L5L6L4";
     if (seedindex==10) return "L2L3D1";
-    if (seedindex==11) return "D1D2L2";    
+    if (seedindex==11) return "D1D2L2"; 
+
+
     return "Unkown seedindex";
     
   }
@@ -183,9 +152,6 @@ private:
   double dphicut_;
   double drcut_;
   
-
-  TLegend *leg3;
-
   TH1 *hist16l_;
   TH1 *hist116l_;
   TH1 *hist16m_;
@@ -234,17 +200,13 @@ gStyle->SetOptTitle(1);
 
 
  TCanvas* c1 = new TCanvas("c1","Track performance",200,10,700,800);
- c1->SetTickx(10);//NEW ???
  c1->Divide(2,2);
  c1->SetFillColor(0);
  c1->SetGrid();
 
-
-
  PlotResiduals Resid_D1PS_L1L2(1,1,0);
  PlotResiduals Resid_D12S_L1L2(1,0,0);
-
- PlotResiduals Resid_D1PS_L2L3(1,1,1); 
+ PlotResiduals Resid_D1PS_L2L3(1,1,1);
  PlotResiduals Resid_D12S_L2L3(1,0,1);
 
  PlotResiduals Resid_D12S_L3L4(1,0,2);
@@ -252,6 +214,8 @@ gStyle->SetOptTitle(1);
 		
  PlotResiduals Resid_D2PS_L1L2(2,1,0);
  PlotResiduals Resid_D22S_L1L2(2,0,0);
+ PlotResiduals Resid_D2PS_L2L3(2,1,1);
+ PlotResiduals Resid_D22S_L2L3(2,0,1); 
  PlotResiduals Resid_D22S_L3L4(2,0,2);
  PlotResiduals Resid_D2PS_D3D4(2,1,5);
  PlotResiduals Resid_D2PS_L1D1(2,1,6);
@@ -272,62 +236,76 @@ gStyle->SetOptTitle(1);
  PlotResiduals Resid_D4PS_L1D1(4,1,6);
  PlotResiduals Resid_D42S_L1D1(4,0,6);
  PlotResiduals Resid_D42S_L2D1(4,0,7);
-
- // PlotResiduals(int disk, int isPS,  int seedindex)		
+		
  PlotResiduals Resid_D5PS_D1D2(5,1,4);
  PlotResiduals Resid_D52S_D1D2(5,0,4);
  PlotResiduals Resid_D5PS_D3D4(5,1,5);
  PlotResiduals Resid_D52S_D3D4(5,0,5);
  PlotResiduals Resid_D5PS_L1D1(5,1,6);
  PlotResiduals Resid_D52S_L1D1(5,0,6);
-
+ 
  PlotResiduals Resid_D5PS_L2D1(5,1,7);
  PlotResiduals Resid_D52S_L2D1(5,0,7);
 
+ PlotResiduals Resid_D1PS_L3L4L2(1,1,8);
+ PlotResiduals Resid_D2PS_L3L4L2(2,1,8);
+ PlotResiduals Resid_D3PS_L3L4L2(3,1,8);
+ PlotResiduals Resid_D4PS_L3L4L2(4,1,8); 
  PlotResiduals Resid_D5PS_L3L4L2(5,1,8);
  PlotResiduals Resid_D52S_L3L4L2(5,0,8);
 
- PlotResiduals Resid_D5PS_L5L6L4(5,1,9);
- PlotResiduals Resid_D52S_L5L6L4(5,0,9);
+ PlotResiduals Resid_D1PS_L5L6L4(1,1,9);
+ PlotResiduals Resid_D12S_L5L6L4(1,0,9);
 
  PlotResiduals Resid_D5PS_L2L3D1(5,1,10);
  PlotResiduals Resid_D52S_L2L3D1(5,0,10);
+ PlotResiduals Resid_D4PS_L2L3D1(4,1,10);
+ PlotResiduals Resid_D42S_L2L3D1(4,0,10);
+ PlotResiduals Resid_D3PS_L2L3D1(3,1,10);
+ PlotResiduals Resid_D32S_L2L3D1(3,0,10);
+ PlotResiduals Resid_D2PS_L2L3D1(2,1,10);
+ PlotResiduals Resid_D22S_L2L3D1(2,0,10);
 
  PlotResiduals Resid_D5PS_D1D2L2(5,1,11);
  PlotResiduals Resid_D52S_D1D2L2(5,0,11);
    
+ PlotResiduals Resid_D4PS_D1D2L2(4,1,11);
+ PlotResiduals Resid_D42S_D1D2L2(4,0,11);
 
 
+ PlotResiduals Resid_D3PS_D1D2L2(3,1,11);
+ PlotResiduals Resid_D32S_D1D2L2(3,0,11);
 
- ifstream in("diskresiduals_disp_all.txt");
+
+ ifstream in("diskresiduals.txt");
 
  int count=0;
 
  while (in.good()) {
 
-   double disk,isPS,pt,idphi,dphi,dphicut,idr,dr,drcut;//#, rinv;
+   double disk,isPS,pt,idphi,dphi,dphicut,idr,dr,drcut,rinv;
    int seedindex=-1;
 
-   in>>disk>>isPS>>seedindex>>pt>>idphi>>dphi>>dphicut>>idr>>dr>>drcut;//>>rinv;
+   in>>disk>>isPS>>seedindex>>pt>>idphi>>dphi>>dphicut>>idr>>dr>>drcut>>rinv;
 
    if (!in.good()) continue;
-   
 
    int added=0;
    
    added+=Resid_D1PS_L1L2.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut);
    added+=Resid_D12S_L1L2.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut);
-
+   
    added+=Resid_D1PS_L2L3.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut);
    added+=Resid_D12S_L2L3.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut);
-
    added+=Resid_D12S_L3L4.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut);
+
    added+=Resid_D1PS_D3D4.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut);
 		
-
-
    added+=Resid_D2PS_L1L2.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut);
    added+=Resid_D22S_L1L2.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut);
+   added+=Resid_D2PS_L2L3.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut);
+   added+=Resid_D22S_L2L3.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut);
+      
    added+=Resid_D22S_L3L4.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut);
    added+=Resid_D2PS_D3D4.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut);
    added+=Resid_D2PS_L1D1.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut);
@@ -356,6 +334,41 @@ gStyle->SetOptTitle(1);
    added+=Resid_D5PS_L1D1.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut);
    added+=Resid_D52S_L1D1.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut);
 
+
+   added+=Resid_D1PS_L3L4L2.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut);
+   added+=Resid_D2PS_L3L4L2.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut);
+   added+=Resid_D3PS_L3L4L2.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut);
+   added+=Resid_D4PS_L3L4L2.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut);
+   added+=Resid_D5PS_L3L4L2.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut);
+
+   added+=Resid_D52S_L3L4L2.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut);
+
+   added+=Resid_D1PS_L5L6L4.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut);
+   added+=Resid_D12S_L5L6L4.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut);
+
+   added+=Resid_D5PS_L2L3D1.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut);
+   added+=Resid_D52S_L2L3D1.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut);
+
+   added+=Resid_D4PS_L2L3D1.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut);
+   added+=Resid_D42S_L2L3D1.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut);
+
+   added+=Resid_D3PS_L2L3D1.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut);
+   added+=Resid_D32S_L2L3D1.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut);
+
+   added+=Resid_D2PS_L2L3D1.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut);
+   added+=Resid_D22S_L2L3D1.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut);
+
+
+
+   added+=Resid_D5PS_D1D2L2.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut);
+   added+=Resid_D52S_D1D2L2.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut);
+   
+   added+=Resid_D3PS_D1D2L2.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut);
+   added+=Resid_D32S_D1D2L2.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut);
+
+   added+=Resid_D4PS_D1D2L2.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut);
+   added+=Resid_D42S_D1D2L2.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut);
+
    if (added!=1) {
      cout << "Added = "<<added<<" : disk isPS seedindex "<<disk<<" "<<isPS<<" "<<seedindex<<endl;
    }
@@ -366,15 +379,30 @@ gStyle->SetOptTitle(1);
 
 //cout << "Processed: "<<count<<" events"<<endl;
 
+ Resid_D1PS_L3L4L2.Draw(c1);
+ c1->Print("diskresiduals.pdf(","pdf");
+ Resid_D12S_L5L6L4.Draw(c1);
+ c1->Print("diskresiduals.pdf(","pdf");
  Resid_D1PS_L1L2.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
+ c1->Print("diskresiduals.pdf(","pdf");
  Resid_D12S_L1L2.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
+ c1->Print("diskresiduals.pdf(","pdf");
+ Resid_D1PS_L2L3.Draw(c1);
+ c1->Print("diskresiduals.pdf(","pdf");
+ Resid_D12S_L2L3.Draw(c1);
+ c1->Print("diskresiduals.pdf(","pdf");
  Resid_D12S_L3L4.Draw(c1);
  c1->Print("diskresiduals.pdf","pdf");
  Resid_D1PS_D3D4.Draw(c1);
  c1->Print("diskresiduals.pdf","pdf");
  
+ Resid_D2PS_L3L4L2.Draw(c1);
+ c1->Print("diskresiduals.pdf","pdf"); 
+ Resid_D2PS_L2L3D1.Draw(c1);
+ c1->Print("diskresiduals.pdf","pdf");
+ Resid_D22S_L2L3D1.Draw(c1);
+ c1->Print("diskresiduals.pdf","pdf");
+
  Resid_D2PS_L1L2.Draw(c1);
  c1->Print("diskresiduals.pdf","pdf");
  Resid_D22S_L1L2.Draw(c1);
@@ -390,6 +418,17 @@ gStyle->SetOptTitle(1);
  Resid_D22S_L2D1.Draw(c1);
  c1->Print("diskresiduals.pdf","pdf");
  
+ Resid_D3PS_L3L4L2.Draw(c1);
+ c1->Print("diskresiduals.pdf","pdf");
+ Resid_D3PS_D1D2L2.Draw(c1);
+ c1->Print("diskresiduals.pdf","pdf");
+ Resid_D32S_D1D2L2.Draw(c1);
+ c1->Print("diskresiduals.pdf","pdf");
+ Resid_D3PS_L2L3D1.Draw(c1);
+ c1->Print("diskresiduals.pdf","pdf");
+ Resid_D32S_L2L3D1.Draw(c1);
+ c1->Print("diskresiduals.pdf","pdf");
+
  Resid_D3PS_L1L2.Draw(c1);
  c1->Print("diskresiduals.pdf","pdf");
  Resid_D32S_L1L2.Draw(c1);
@@ -405,6 +444,17 @@ gStyle->SetOptTitle(1);
  Resid_D32S_L2D1.Draw(c1);
  c1->Print("diskresiduals.pdf","pdf");
  
+ Resid_D4PS_L3L4L2.Draw(c1);
+ c1->Print("diskresiduals.pdf","pdf");
+ Resid_D4PS_D1D2L2.Draw(c1);
+ c1->Print("diskresiduals.pdf","pdf");
+ Resid_D42S_D1D2L2.Draw(c1);
+ c1->Print("diskresiduals.pdf","pdf");
+ Resid_D4PS_L2L3D1.Draw(c1);
+ c1->Print("diskresiduals.pdf","pdf");
+ Resid_D42S_L2L3D1.Draw(c1);
+ c1->Print("diskresiduals.pdf","pdf");
+
  Resid_D42S_L1L2.Draw(c1);
  c1->Print("diskresiduals.pdf","pdf");
  Resid_D4PS_D1D2.Draw(c1);
@@ -418,6 +468,16 @@ gStyle->SetOptTitle(1);
  Resid_D42S_L2D1.Draw(c1);
  c1->Print("diskresiduals.pdf","pdf"); 
  
+ Resid_D5PS_L3L4L2.Draw(c1);
+ c1->Print("diskresiduals.pdf","pdf");
+ Resid_D52S_L3L4L2.Draw(c1);
+ c1->Print("diskresiduals.pdf","pdf");
+ Resid_D5PS_L2L3D1.Draw(c1);
+ c1->Print("diskresiduals.pdf","pdf");
+ Resid_D52S_L2L3D1.Draw(c1);
+ c1->Print("diskresiduals.pdf","pdf");
+
+
  Resid_D5PS_D1D2.Draw(c1);
  c1->Print("diskresiduals.pdf","pdf");
  Resid_D52S_D1D2.Draw(c1);
@@ -429,7 +489,10 @@ gStyle->SetOptTitle(1);
  Resid_D5PS_L1D1.Draw(c1);
  c1->Print("diskresiduals.pdf","pdf");
  Resid_D52S_L1D1.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
+ c1->Print("diskresiduals.pdf)","pdf");
+
+
+
 
 }
 
