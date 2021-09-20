@@ -17,26 +17,38 @@ public:
     disk_=disk;
     isPS_=isPS;
     seedindex_=seedindex;
-    double drphimax=1.0;
-    double drmax=10.0;
-    if (isPS==1) drmax=5.0;
+    double drphimax=0.6;
+    double drmax=5.0;
+    int phibins = 15 ; //50;
+    int rbins = 20 ; //20;
+    if (seedindex>7) { //displaced seeds
+      drmax=10.0;
+      drphimax=1.5;
+      phibins = 15;
+      rbins = 20;
+    };
+    if (isPS==1) drmax=3.0;
+    if (disk ==1 && isPS ==0 && seedindex==2){
+    drphimax=1.5; 
+    };
+
     string name="r*phi residual in D"+std::to_string(disk)+ps2s(isPS)+", "+seedname(seedindex)+" seed, pt<3 GeV";
-    hist16l_ = new TH1F(name.c_str(),name.c_str(),50,-drphimax,drphimax);
+    hist16l_ = new TH1F(name.c_str(),name.c_str(),phibins,-drphimax,drphimax);
     name="r*iphi residual in D"+std::to_string(disk)+ps2s(isPS)+", "+seedname(seedindex)+" seed, pt<3 GeV";
-    hist116l_ = new TH1F(name.c_str(),name.c_str(),50,-drphimax,drphimax);
+    hist116l_ = new TH1F(name.c_str(),name.c_str(),phibins,-drphimax,drphimax);
     name="r*phi residual in D"+std::to_string(disk)+ps2s(isPS)+", "+seedname(seedindex)+" seed, 3<pt<8 GeV";
-    hist16m_ = new TH1F(name.c_str(),name.c_str(),50,-drphimax,drphimax);
+    hist16m_ = new TH1F(name.c_str(),name.c_str(),phibins,-drphimax,drphimax);
     name="r*iphi residual in D"+std::to_string(disk)+ps2s(isPS)+", "+seedname(seedindex)+" seed, 3<pt<8 GeV";
-    hist116m_ = new TH1F(name.c_str(),name.c_str(),50,-drphimax,drphimax);
+    hist116m_ = new TH1F(name.c_str(),name.c_str(),phibins,-drphimax,drphimax);
     name="r*phi residual in D"+std::to_string(disk)+ps2s(isPS)+", "+seedname(seedindex)+" seed, pt>8 GeV";
-    hist16h_ = new TH1F(name.c_str(),name.c_str(),50,-drphimax,drphimax);
+    hist16h_ = new TH1F(name.c_str(),name.c_str(),phibins,-drphimax,drphimax);
     name="r*iphi residual in D"+std::to_string(disk)+ps2s(isPS)+", "+seedname(seedindex)+" seed, pt>8 GeV";
-    hist116h_ = new TH1F(name.c_str(),name.c_str(),50,-drphimax,drphimax);
+    hist116h_ = new TH1F(name.c_str(),name.c_str(),phibins,-drphimax,drphimax);
     
     name="r residual in D"+std::to_string(disk)+ps2s(isPS)+", "+seedname(seedindex);
-    hist16_ = new TH1F(name.c_str(),name.c_str(),20,-drmax,drmax);
+    hist16_ = new TH1F(name.c_str(),name.c_str(),rbins,-drmax,drmax);
     name="ir residual in D"+std::to_string(disk)+ps2s(isPS)+", "+seedname(seedindex);
-    hist116_ = new TH1F(name.c_str(),name.c_str(),20,-drmax,drmax);
+    hist116_ = new TH1F(name.c_str(),name.c_str(),rbins,-drmax,drmax);
 }
 
   int addResid(int disk, int isPS, int seedindex, double pt, double idphi, double dphi, double dphicut, double idr, double dr, double drcut){
@@ -74,9 +86,17 @@ public:
 
     cout << "disk seedindex phicut : "<<disk_<<" "<<seedindex_<<" "<<dphicut_<<endl;
     
+
+    TLegend* leg3 = new TLegend(0.37,0.64,0.59,0.85);
+    leg3->SetTextSize(0.08);
+    leg3->SetFillColor(0);
+    leg3->SetBorderSize(0);
+
+
     c->cd(1);
     hist16l_->SetLineColor(kBlue);
     hist16l_->Draw();
+    hist16l_->SetMaximum(1.61 *hist16l_->GetMaximum() );
     hist116l_->SetLineColor(kRed);
     hist116l_->Draw("Same");
     TLine* ll1 = new TLine(-dphicut_,0,-dphicut_,0.5*hist116l_->GetMaximum());
@@ -84,9 +104,16 @@ public:
     TLine* ll2 = new TLine(dphicut_,0,dphicut_,0.5*hist116l_->GetMaximum());
     ll2->Draw();
 
+    leg3->AddEntry( hist16l_, "float", "L" );
+    leg3->AddEntry( hist116l_, "int", "L");
+    leg3->Draw();
+    c->Update();
+
+
     c->cd(2);
     hist16m_->SetLineColor(kBlue);
     hist16m_->Draw();
+    hist16m_->SetMaximum(1.61 *hist16m_->GetMaximum() );
     hist116m_->SetLineColor(kRed);
     hist116m_->Draw("Same");
     TLine* lm1 = new TLine(-dphicut_,0,-dphicut_,0.5*hist116m_->GetMaximum());
@@ -97,6 +124,7 @@ public:
     c->cd(3);
     hist16h_->SetLineColor(kBlue);
     hist16h_->Draw();
+    hist16h_->SetMaximum(1.61 *hist16h_->GetMaximum() );
     hist116h_->SetLineColor(kRed);
     hist116h_->Draw("Same");
     TLine* lh1 = new TLine(-dphicut_,0,-dphicut_,0.5*hist116h_->GetMaximum());
@@ -107,6 +135,7 @@ public:
     c->cd(4);
     hist16_->SetLineColor(kBlue);
     hist16_->Draw();
+    hist16_->SetMaximum(1.61 *hist16_->GetMaximum() );
     hist116_->SetLineColor(kRed);
     hist116_->Draw("Same");
     TLine* l1 = new TLine(-drcut_,0,-drcut_,0.5*hist116_->GetMaximum());
@@ -152,6 +181,8 @@ private:
   double dphicut_;
   double drcut_;
   
+  TLegend *leg3;  
+
   TH1 *hist16l_;
   TH1 *hist116l_;
   TH1 *hist16m_;
@@ -277,7 +308,7 @@ gStyle->SetOptTitle(1);
  PlotResiduals Resid_D32S_D1D2L2(3,0,11);
 
 
- ifstream in("diskresiduals.txt");
+ ifstream in("diskresiduals_prompt.txt");
 
  int count=0;
 
