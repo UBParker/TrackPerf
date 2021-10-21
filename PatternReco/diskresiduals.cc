@@ -22,12 +22,37 @@ public:
     double drmax=5.0;
     int phibins = 15 ; //50;
     int rbins = 20 ; //20;
-    if (seedindex>7) { //displaced seeds
+
+    if (seedindex==8) { //displaced seeds  8 = L3L4L2
+      drmax=10.0;
+      drphimax=.5;
+      phibins = 60;
+      rbins = 30;
+    };
+
+    if (seedindex==10 ) { //displaced seeds          if (seedindex==10) return "L2L3D1";
+
+   
       drmax=10.0;
       drphimax=1.5;
-      phibins = 15;
+      if ( isPS ==1 ) {
+        drphimax=0.3;
+        phibins = 15;
+
+      }
+      phibins = 60;
       rbins = 20;
     };
+    if (seedindex==11)  { //displaced seeds      11 =      "D1D2L2";
+
+
+      drmax=10.0;
+      drphimax=.5;
+      phibins = 60;
+      rbins = 20;
+    };
+
+
     if (isPS==1) drmax=3.0;
     if (disk ==1 && isPS ==0 && seedindex==2){
     drphimax=1.5; 
@@ -399,7 +424,7 @@ gStyle->SetOptTitle(1);
  PlotResiduals Resid_D3PS_D1D2L2(3,1,11);
  PlotResiduals Resid_D32S_D1D2L2(3,0,11);
 
- ifstream in("diskresiduals_false_10000events.txt");
+ ifstream in("diskresiduals_true_allEvents.txt");
  //"diskresiduals_disp_10000evptl5.txt");
 
 
@@ -475,8 +500,6 @@ gStyle->SetOptTitle(1);
    added+=Resid_D1PS_L5L6L4.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut, rinv );
    added+=Resid_D12S_L5L6L4.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut, rinv );
 
-   added+=Resid_D5PS_L2L3D1.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut, rinv );
-   added+=Resid_D52S_L2L3D1.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut, rinv );
 
    added+=Resid_D4PS_L2L3D1.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut, rinv );
    added+=Resid_D42S_L2L3D1.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut, rinv );
@@ -505,7 +528,7 @@ gStyle->SetOptTitle(1);
    added+=Resid_D4PS_L3L4L2.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut, rinv );
    added+=Resid_D5PS_L3L4L2.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut, rinv );
 
-   added+=Resid_D52S_L3L4L2.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut, rinv );
+   /*
 
    added+=Resid_D1PS_L5L6L4.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut, rinv );
    added+=Resid_D12S_L5L6L4.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut, rinv );
@@ -513,11 +536,7 @@ gStyle->SetOptTitle(1);
    added+=Resid_D5PS_L2L3D1.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut, rinv );
    added+=Resid_D52S_L2L3D1.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut, rinv );
 
-   added+=Resid_D4PS_L2L3D1.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut, rinv );
    added+=Resid_D42S_L2L3D1.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut, rinv );
-
-   added+=Resid_D3PS_L2L3D1.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut, rinv );
-   added+=Resid_D32S_L2L3D1.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut, rinv );
 
    added+=Resid_D2PS_L2L3D1.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut, rinv );
    added+=Resid_D22S_L2L3D1.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut, rinv );
@@ -532,6 +551,8 @@ gStyle->SetOptTitle(1);
 
    added+=Resid_D4PS_D1D2L2.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut, rinv );
    added+=Resid_D42S_D1D2L2.addResid(disk, isPS, seedindex, pt, idphi, dphi, dphicut, idr, dr, drcut, rinv );
+
+   */
 
    if (added!=1) {
      cout << "Added = "<<added<<" : disk isPS seedindex "<<disk<<" "<<isPS<<" "<<seedindex<<endl;
@@ -572,6 +593,8 @@ gStyle->SetOptTitle(1);
  Resid_D2PS_L2L3D1.Draw(c1);
  c1->Print("diskresiduals.pdf","pdf");
  Resid_D22S_L2L3.Draw(c1);
+ c1->Print("diskresiduals.pdf","pdf");
+ Resid_D2PS_L2L3D1.Draw(c1);
  c1->Print("diskresiduals.pdf","pdf");
  Resid_D22S_L2L3D1.Draw(c1);
  c1->Print("diskresiduals.pdf","pdf");
@@ -760,6 +783,7 @@ gStyle->SetOptTitle(1);
  c1->Print("diskresiduals.pdf","pdf");
  Resid_D52S_L1D1.Draw(c1);
  c1->Print("diskresiduals.pdf)","pdf");
+<<<<<<< HEAD
 */
 
 
