@@ -162,25 +162,25 @@ public:
 
 
 
-    hist16m_->SetLineColor(kBlue);
-    hist16m_->GetXaxis()->SetNdivisions(6);
-    hist16m_->Draw("hist");
-    hist16m_->SetMaximum(2.21 *hist16m_->GetMaximum() );
+    hist116m_->SetLineColor(kBlue);
+    hist116m_->GetXaxis()->SetNdivisions(6);
+    hist116m_->Draw("hist");
+    hist116m_->SetMaximum(2.21 *hist116m_->GetMaximum() );
 
 
-    hist16mp_->SetLineColor(kRed);
+    hist116mp_->SetLineColor(kRed);
 
-    hist16mp_->Draw("hist Same");
+    hist116mp_->Draw("hist Same");
 
 
-    TLine* lm1 = new TLine(-dphicut_,0,-dphicut_,1.7*hist16m_->GetMaximum());
+    TLine* lm1 = new TLine(-dphicut_,0,-dphicut_,1.7*hist116m_->GetMaximum());
     lm1->Draw();
-    TLine* lm2 = new TLine(dphicut_,0,dphicut_,1.7*hist16m_->GetMaximum());
+    TLine* lm2 = new TLine(dphicut_,0,dphicut_,1.7*hist116m_->GetMaximum());
     lm2->Draw();
 
 
-    leg3->AddEntry( hist16m_, "- charge ", "L" );
-    leg3->AddEntry( hist16mp_, "+ charge ", "L" );
+    leg3->AddEntry( hist116m_, "- charge ", "L" );
+    leg3->AddEntry( hist116mp_, "+ charge ", "L" );
     leg3->Draw();
     c->Update();
     leg3->Draw();
@@ -424,7 +424,7 @@ gStyle->SetOptTitle(1);
  PlotResiduals Resid_D3PS_D1D2L2(3,1,11);
  PlotResiduals Resid_D32S_D1D2L2(3,0,11);
 
- ifstream in("diskresiduals_true_allEvents.txt");
+ ifstream in("diskresiduals_false_allEvents.txt");
  //"diskresiduals_disp_10000evptl5.txt");
 
 
@@ -604,7 +604,6 @@ gStyle->SetOptTitle(1);
  Resid_D32S_L2L3D1.Draw(c1);
  c1->Print("diskresiduals.pdf","pdf");
 
-
  Resid_D4PS_L2L3D1.Draw(c1);
  c1->Print("diskresiduals.pdf","pdf");
  Resid_D42S_L2L3D1.Draw(c1);
@@ -615,177 +614,14 @@ gStyle->SetOptTitle(1);
  Resid_D32S_D1D2L2.Draw(c1);
  c1->Print("diskresiduals.pdf","pdf");
 
- Resid_D3PS_D1D2.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
- Resid_D32S_D1D2.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
-
  Resid_D4PS_D1D2L2.Draw(c1);
  c1->Print("diskresiduals.pdf","pdf");
  Resid_D42S_D1D2L2.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
- Resid_D4PS_D1D2.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
- Resid_D42S_D1D2.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
-
-
-
-
-
-
-
-
- Resid_D52S_L1D1.Draw(c1);
  c1->Print("diskresiduals.pdf)","pdf");
+
 
 
 
 }
-
-/*
-
-
-
-
-
-
-
-
-
-
- Resid_D1PS_L3L4L2.Draw(c1);
- c1->Print("diskresiduals.pdf(","pdf");
- Resid_D12S_L3L4L2.Draw(c1);
- c1->Print("diskresiduals.pdf(","pdf"); 
- Resid_D2PS_L3L4L2.Draw(c1);
- c1->Print("diskresiduals.pdf(","pdf");
- Resid_D22S_L3L4L2.Draw(c1);
- c1->Print("diskresiduals.pdf(","pdf");
-
-
-
-=======
- Resid_D1PS_L3L4L2.Draw(c1);
- c1->Print("diskresiduals.pdf(","pdf");
->>>>>>> 99300ab49fe70d09593989b91f012cc2cd2c0383
- Resid_D12S_L5L6L4.Draw(c1);
- c1->Print("diskresiduals.pdf(","pdf");
- Resid_D1PS_L1L2.Draw(c1);
- c1->Print("diskresiduals.pdf(","pdf");
- Resid_D12S_L1L2.Draw(c1);
- c1->Print("diskresiduals.pdf(","pdf");
- Resid_D1PS_L2L3.Draw(c1);
- c1->Print("diskresiduals.pdf(","pdf");
- Resid_D12S_L2L3.Draw(c1);
- c1->Print("diskresiduals.pdf(","pdf");
- Resid_D12S_L3L4.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
- Resid_D1PS_D3D4.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
- 
- Resid_D2PS_L3L4L2.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf"); 
- Resid_D2PS_L2L3D1.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
-<<<<<<< HEAD
- Resid_D22S_L2L3.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
-=======
->>>>>>> 99300ab49fe70d09593989b91f012cc2cd2c0383
- Resid_D22S_L2L3D1.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
-
- Resid_D2PS_L1L2.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
- Resid_D22S_L1L2.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
- Resid_D22S_L3L4.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
- Resid_D2PS_D3D4.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
- Resid_D2PS_L1D1.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
- Resid_D2PS_L2D1.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
- Resid_D22S_L2D1.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
- 
- Resid_D3PS_L3L4L2.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
- Resid_D3PS_D1D2L2.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
- Resid_D32S_D1D2L2.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
- Resid_D3PS_L2L3D1.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
- Resid_D32S_L2L3D1.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
-
- Resid_D3PS_L1L2.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
- Resid_D32S_L1L2.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
- Resid_D3PS_D1D2.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
- Resid_D32S_D1D2.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
- Resid_D3PS_L1D1.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
- Resid_D3PS_L2D1.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
- Resid_D32S_L2D1.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
- 
- Resid_D4PS_L3L4L2.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
- Resid_D4PS_D1D2L2.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
- Resid_D42S_D1D2L2.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
- Resid_D4PS_L2L3D1.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
- Resid_D42S_L2L3D1.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
-
- Resid_D42S_L1L2.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
- Resid_D4PS_D1D2.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
- Resid_D42S_D1D2.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
- Resid_D4PS_L1D1.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
- Resid_D42S_L1D1.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
- Resid_D42S_L2D1.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf"); 
- 
- Resid_D5PS_L3L4L2.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
- Resid_D52S_L3L4L2.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
- Resid_D5PS_L2L3D1.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
- Resid_D52S_L2L3D1.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
-
-
- Resid_D5PS_D1D2.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
- Resid_D52S_D1D2.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
- Resid_D5PS_D3D4.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
- Resid_D52S_D3D4.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
- Resid_D5PS_L1D1.Draw(c1);
- c1->Print("diskresiduals.pdf","pdf");
- Resid_D52S_L1D1.Draw(c1);
- c1->Print("diskresiduals.pdf)","pdf");
-<<<<<<< HEAD
-*/
-
-
 
 
